@@ -11,6 +11,7 @@ keywords = ["polkit", "authorization", "D-Bus"]
 categories = ["authentication", "os::unix-apis"]
 # The tooling of the repository is of no use to those who build the crate.
 exclude = [
+    ".githooks/",
     ".gitignore",
 ]
 
