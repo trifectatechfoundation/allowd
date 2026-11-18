@@ -1,0 +1,30 @@
+[package]
+name = "allowd"
+version = "0.1.0"
+description = "An authorization daemon, compatible with polkit"
+edition = "2024"
+license = "GPL-2.0-or-later"
+readme = "README.md"
+rust-version = "1.89"
+repository = "https://github.com/trifectatechfoundation/allowd"
+keywords = ["polkit", "authorization", "D-Bus"]
+categories = ["authentication", "os::unix-apis"]
+# The tooling of the repository is of no use to those who build the crate.
+exclude = [
+    ".gitignore",
+]
+
+[dependencies]
+tokio = { version = "1.54.1", features = ["macros", "rt"] }
+zbus = { version = "6.3.0", default-features = false, features = ["tokio"] }
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = "s"
+panic = "abort"
+# Keeps most of the debug info in a separate `allowd.dwp`. Debuggers find it there through the
+# debug info that the binary keeps, so the binary mustn't be stripped.
+split-debuginfo = "packed"
+# No one needs an undebuggable release binary.
+debug = "full"
