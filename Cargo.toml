@@ -15,6 +15,7 @@ exclude = [
     ".githooks/",
     ".github/",
     ".gitignore",
+    "release-plz.toml",
 ]
 
 [dependencies]
