@@ -1,0 +1,35 @@
+# release-plz configuration
+# https://release-plz.dev/docs/config
+
+[workspace]
+# allowd is not a library, so there's no API for cargo-semver-checks to check.
+semver_check = false
+# Bump the minor version for features, and the patch version for the rest, of 0.x versions too.
+features_always_increment_minor = true
+
+[changelog]
+# The default header, without the `[Unreleased]` section.
+header = """# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+"""
+
+# Group the commits by their Conventional Commits type. The changelog sorts the groups by name.
+commit_parsers = [
+    { message = "^feat", group = "added" },
+    { message = "^fix", group = "fixed" },
+    { message = "^perf", group = "performance" },
+    { message = "^refactor", group = "changed" },
+    { message = "^docs", group = "documentation" },
+    { message = "^revert", group = "reverted" },
+    { message = "^chore\\(deps\\)", group = "dependencies" },
+    # Work on the repository rather than on allowd itself, such as on its CI, its tests and its
+    # releases.
+    { message = "^(build|chore|ci|style|test)", skip = true },
+    { message = ".*", group = "other" },
+]
+# List the breaking changes even of the types that the parsers above skip.
+protect_breaking_commits = true
